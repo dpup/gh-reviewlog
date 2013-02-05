@@ -7,6 +7,8 @@ This extension orignated from needing to keep track of pull requests on 50+ proj
 access to; both open source and work projects. I wanted ambient information about the total count
 and to see when there was activity on those PRs.
 
+![Screen shot](https://raw.github.com/dpup/gh-reviewlog/master/screenshots/Screen%20Shot%202013-02-04%20at%206.54.02%20PM.png)
+
 This extension provides a [browser action](http://developer.chrome.com/extensions/browserAction.html)
 that shows you how many open pull requests there are on projects you have access to. Clicking the
 button gives a drop down with quick access to each PR and their last updated time. An
