@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GitHub ReviewLog</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+<article id="auth" class="page">
+  <form id="frm">
+    <p>Sign in to GitHub:</p>
+    <p>
+      <input type="text" id="username" placeholder="username">
+      <input type="password" id="password" placeholder="password">
+      <input type="submit" id="button" value="Login">
+    </p>
+    <p id="msg" class="info">
+      (Your password will only be used to get an access token, it will not be stored)
+    </p>
+  </form>
+</article>
+
+<article id="list" class="page">
+  <header>
+    <h1>GitHub ReviewLog</h1>
+    <h2><span id="status">Loading...</span><!-- TODO (<span id="refresh">refresh</span>)--></h2>
+  </header>
+  <section>
+    <table id="pull_table"></table>
+  </section>
+</article>
+
+<script src="../common.js"></script>
+<script src="../github.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "manifest_version": 2,
+
+  "name": "GitHub ReviewLog",
+  "description": "Making it easier to keep track of your projects' pull requests.",
+  "version": "0.1",
+
+  "icons": {
+    "48": "assets/github_48.png",
+    "128": "assets/github_128.png",
+    "256": "assets/github_256.png",
+    "512": "assets/github_512.png"
+  },
+
+  "incognito": "split",
+
+  "permissions": [
+    "alarms",
+    "https://api.github.com/",
+    "https://github.com/"
+  ],
+
+  "browser_action": {
+    "default_icon": "assets/github_128.png",
+    "default_popup": "popup/popup.html"
+  },
+
+  "background": {
+    "scripts": [
+      "common.js",
+      "github.js",
+      "background.js"
+    ],
+    "persistent": false
+  }
+}
