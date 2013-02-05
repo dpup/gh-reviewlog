@@ -14,6 +14,14 @@ button gives a drop down with quick access to each PR and their last updated tim
 minutes, changing the icon badge to red if there is new activity.
 
 
+Installation
+------------
+
+The best bet is to get the latest published version from the [Chrome Web Store](https://chrome.google.com/webstore/detail/github-reviewlog/cmlmlaigghcfegnfoenahanhhhehpeca?hl=en-US&gl=US).
+
+You can also download the source and "Load unpacked extension" from `chrome://extensions/`
+
+
 To do list
 ----------
 
