@@ -2,18 +2,32 @@
  * @fileoverview Background event page that refreshes the local cache periodically.
  */
 
-chrome.alarms.create('refresh', {periodInMinutes: 2})
+log('Event page loaded')
+
+chrome.runtime.onInstalled.addListener(function() {
+  log('Background page installed')
+  chrome.browserAction.setBadgeText({text: '-'})
+  chrome.browserAction.setBadgeBackgroundColor({color: '#660000'})
+  chrome.alarms.create('refresh', {periodInMinutes: 2})
+  refresh()
+})
+
+
+chrome.runtime.onSuspend.addListener(function() {
+  log('Event page unloaded')
+})
+
+
 chrome.alarms.onAlarm.addListener(refresh)
-chrome.browserAction.setBadgeText({text: '-'})
-chrome.browserAction.setBadgeBackgroundColor({color: '#660000'})
-refresh()
+
 
 var loadInProgress = false
 
 function refresh() {
   log('Refreshing @', new Date())
+  localStorage.lastRefresh = Date.now()
 
-  // Force everything to bypass cache.
+  // Force everything to bypass cache and be read from localStorage.
   localCache = {}
 
   if (loadInProgress) {
@@ -27,11 +41,11 @@ function refresh() {
     verifyLogin(function (err, valid) {
       loadInProgress = false
 
-      // Probably a network failure
+      // Probably a network failure.
       if (err) {
         log('Error verifying login details', err)
 
-      // Force refresh local cache.
+      // Force refresh local data.
       } else if (valid) {
         log('Valid login, requesting all pull requests')
         loadInProgress = true
