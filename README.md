@@ -24,17 +24,11 @@ The best bet is to get the latest published version from the [Chrome Web Store](
 You can also download the source and "Load unpacked extension" from `chrome://extensions/`
 
 
-To do list
-----------
+Feature Requests
+----------------
 
-This is a work in progress.
+This is a work in progress, file feature requests on [the issue page](https://github.com/dpup/gh-reviewlog/issues).
 
-- Improve first log in experience (loading... can take a while).
-- Mute a PR until it is updated.
-- Ignore repositories and organizations.
-- Manual refresh.
-- Notifications / visual call out when you are explicitly mentioned in a PR.
-- Settings for refresh frequency.
 
 Author
 ------
