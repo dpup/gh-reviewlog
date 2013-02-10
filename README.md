@@ -74,3 +74,6 @@ Other Licences
 
 Icons by [Nadja Hallfahrt](http://blog.artcore-illustrations.de/) used under
 Creative Commons (Attribution-Noncommercial-No Derivative Works 3.0 Unported)
+
+[Chrome-Bootstrap](https://github.com/roykolak/chrome-bootstrap) used under
+MIT Licence.

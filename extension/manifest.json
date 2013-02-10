@@ -20,6 +20,8 @@
     "https://github.com/"
   ],
 
+  "options_page": "options/options.html",
+
   "browser_action": {
     "default_icon": "assets/github_128.png",
     "default_popup": "popup/popup.html"

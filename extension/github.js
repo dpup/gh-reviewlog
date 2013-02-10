@@ -176,6 +176,7 @@ function getPullRequests(owner, project, fn, force) {
       return {
         number: obj.number,
         title: obj.title,
+        body: obj.body,
         url: obj.html_url,
         owner: owner,
         project: project,

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GitHub ReviewLog - Options</title>
+<link rel="stylesheet" href="../assets/chrome-bootstrap/chrome-bootstrap.css">
+</head>
+<body class="frame">
+
+  <div class="navigation">
+    <h1><a href="#">GitHub ReviewLog</a></h1>
+    <p>&nbsp;</p>
+    <ul class="menu">
+      <li class="selected">
+        <a href="#settings">Settings</a>
+      </li>
+    </ul>
+    <ul class="menu">
+      <li>
+        <a href="#about">About</a>
+      </li>
+    </ul>
+  </div>
+  <div class="mainview view">
+
+    <div id="settings" class="selected">
+      <header>
+        <h1>Settings</h1>
+      </header>
+      <div class="content">
+
+        <div class="controls">
+          <div class="text"><b>Refresh Frequency (sec)</b> - time between background refreshes</div>
+          <div class="spacer"></div>
+          <div class="corner">
+            <input id="refresh_rate" type="text" class="search" placeholder="120">
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="text"><b>Alert Words</b> - comma separated list of words that will trigger alerts </div>
+          <div class="spacer"></div>
+          <div class="corner">
+            <input id="alert_words" type="text" class="search" placeholder="dan, error">
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="text"><b>Ignore List</b> - comma separated list of repository names to ignore</div>
+          <div class="spacer"></div>
+          <div class="corner">
+            <input id="ignore_repos" type="text" class="search" placeholder="defunkt_project">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="about">
+      <header>
+        <h1>About</h1>
+      </header>
+      <div class="content">
+        <section>
+          <h3>GitHub ReviewLog, version <span id="version"></span></h3>
+          <p>
+            A Chrome Extension for making it easier to keep track of all your
+            projects' pull requests.
+          </p>
+          <p>
+            <a href="https://chrome.google.com/webstore/detail/github-reviewlog/cmlmlaigghcfegnfoenahanhhhehpeca" target="_new">
+            View in the Chrome Web Store</a>.
+          </p>
+        </section>
+        <section>
+          <h3>Credits</h3>
+          <p>
+            Created by <a href="http://pupius.co.uk" target="_new">Dan Pupius</a>
+            (<a href="http://twitter.com/dpup">@dpup</a>).
+          </p>
+          <p>
+            Icons by <a href="http://blog.artcore-illustrations.de/" target="_new">
+            Nadja Hallfahrt</a>.
+          </p>
+          <p>
+            Options page made fancy with <a href="https://github.com/roykolak/chrome-bootstrap" target="_new">
+            Chrome-Bootstrap</a>.
+          </p>
+        </section>
+        <section>
+          <h3>Source</h3>
+          <p>
+            This extension is open source, released under the MIT Licence.  You
+            can view the code, file bugs, and make contributions at
+            <a href="https://github.com/dpup/gh-reviewlog" target="_new">github.com/dpup/gh-reviewlog</a>.
+          </p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script src="../common.js"></script>
+  <script src="options.js"></script>
+</bodY>
+</html>
