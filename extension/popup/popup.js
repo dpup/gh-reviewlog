@@ -80,14 +80,27 @@ function setupListView() {
   var lastLoad = fetch('lastView') || 0
   store('lastView', Date.now())
 
+  var alertWords = getAlertWords()
+
   getAllPullRequests(function (result) {
     setContent('status', result.repoCount + ' repositories, ' + result.pulls.length + ' pull requests')
+
 
     var pullsEl = getEl('pull_table')
     result.pulls.forEach(function (pull) {
       var tr = document.createElement('tr')
+      var classes = []
 
-      if (pull.updatedAt > lastLoad) tr.className = 'new'
+      if (pull.updatedAt > lastLoad) classes.push('new')
+
+      for (var i = 0; i < alertWords.length; i++) {
+        if (pull.title.indexOf(alertWords[i]) != -1 || pull.body.indexOf(alertWords[i]) != -1) {
+          classes.push('alert')
+          break
+        }
+      }
+
+      tr.className = classes.join(' ')
 
       var avatar = document.createElement('td')
       avatar.className = 'avatar'
@@ -97,17 +110,12 @@ function setupListView() {
       avatar.appendChild(img)
       tr.appendChild(avatar)
 
-      // var repo = document.createElement('td')
-      // repo.className = 'repo'
-      // repo.title = pull.owner + '/' + pull.project
-      // repo.appendChild(document.createTextNode(pull.project))
-      // tr.appendChild(repo)
-
       var title = document.createElement('td')
       title.className = 'title'
       var anchor = document.createElement('a')
       anchor.href = pull.url
       anchor.target = '_new'
+      anchor.title = pull.body
       anchor.appendChild(document.createTextNode(pull.title))
       title.appendChild(anchor)
       var span = document.createElement('span')
@@ -120,15 +128,6 @@ function setupListView() {
       date.appendChild(document.createTextNode(relativeDate(pull.updatedAt)))
       tr.appendChild(date)
 
-      // number: obj.number,
-      // title: obj.title,
-      // url: obj.html_url,
-      // owner: owner,
-      // project: project,
-      // updatedAt: obj.updated_at,
-      // user: obj.user.login,
-      // userAvatar: obj.user.avatar_url
-
       pullsEl.appendChild(tr)
     })
 
@@ -139,6 +138,14 @@ function setupListView() {
   getEl('auth').style.display = 'none'
   getEl('list').style.display = 'block'
 }
+
+
+function getAlertWords() {
+  return (fetch('alert_words') || '').split(',').map(function (word) {
+    return word.trim()
+  })
+}
+
 
 document.body.addEventListener('click', function (e) {
   var target = e.target

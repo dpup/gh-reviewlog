@@ -84,6 +84,11 @@ a {
   text-decoration: none;
 }
 
+a:focus {
+  outline: 0;
+  text-decoration: underline;
+}
+
 table  {
   width: 100%;
   table-layout: fixed;
@@ -100,6 +105,11 @@ tr:hover td {
 
 tr:hover a {
   color: rgb(200, 0, 0);
+}
+
+.alert .title a:before {
+  color: red;
+  content: '!!! ';
 }
 
 td {
