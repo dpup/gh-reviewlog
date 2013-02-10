@@ -86,12 +86,12 @@ function getRepos(type, path, fn, force) {
     var res = parseResponse(xhr)
     if (!res) return fn([])
 
-    var repos = res.map(function (obj) {
+    var repos = filterIgnored(res.map(function (obj) {
       return {
         owner: obj.full_name.split('/')[0],
         project: obj.full_name.split('/')[1],
       }
-    })
+    }))
     store(cacheKey, repos)
     fn(repos)
   }
@@ -244,4 +244,15 @@ function parseResponse(xhr) {
     log('JSON parse error', e, xhr.responseText)
     return null
   }
+}
+
+
+function filterIgnored(list) {
+  var filter = fetch('ignore_repos')
+  if (!filter) return list
+  var ignoreList = filter.split(',').map(function (repo) { return repo.trim() })
+
+  return list.filter(function (repo) {
+    return ignoreList.indexOf(repo.project) == -1
+  })
 }
