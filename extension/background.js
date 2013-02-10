@@ -8,7 +8,6 @@ chrome.runtime.onInstalled.addListener(function() {
   log('Background page installed')
   chrome.browserAction.setBadgeText({text: '-'})
   chrome.browserAction.setBadgeBackgroundColor({color: '#660000'})
-  chrome.alarms.create('refresh', {periodInMinutes: 2})
   refresh()
 })
 
@@ -26,6 +25,9 @@ var loadInProgress = false
 function refresh() {
   log('Refreshing @', new Date())
   localStorage.lastRefresh = Date.now()
+
+  // Schedule alarm here so that it gets latest setting.
+  chrome.alarms.create('refresh', {periodInMinutes: getRefreshRate()})
 
   // Force everything to bypass cache and be read from localStorage.
   localCache = {}
@@ -77,4 +79,10 @@ function refresh() {
       }
     })
   }
+}
+
+function getRefreshRate() {
+  var time = Number(fetch('refresh_rate'))
+  if (isNaN(time) || time <= 0) return 2
+  else return time
 }
