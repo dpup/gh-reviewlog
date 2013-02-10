@@ -3,7 +3,7 @@
 
   "name": "GitHub ReviewLog",
   "description": "Making it easier to keep track of your projects' pull requests.",
-  "version": "0.1",
+  "version": "0.2",
 
   "icons": {
     "48": "assets/github_48.png",
