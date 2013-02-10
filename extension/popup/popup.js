@@ -141,7 +141,9 @@ function setupListView() {
 
 
 function getAlertWords() {
-  return (fetch('alert_words') || '').split(',').map(function (word) {
+  var words = fetch('alert_words')
+  if (!words) return []
+  return words.split(',').map(function (word) {
     return word.trim()
   })
 }
