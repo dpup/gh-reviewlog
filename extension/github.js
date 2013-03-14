@@ -85,13 +85,12 @@ function getRepos(type, path, fn, force) {
   xhr.onload = function () {
     var res = parseResponse(xhr)
     if (!res) return fn([])
-
-    var repos = filterIgnored(res.map(function (obj) {
+    var repos = filterIgnored(res).map(function (obj) {
       return {
         owner: obj.full_name.split('/')[0],
         project: obj.full_name.split('/')[1],
       }
-    }))
+    })
     store(cacheKey, repos)
     fn(repos)
   }
@@ -250,9 +249,25 @@ function parseResponse(xhr) {
 function filterIgnored(list) {
   var filter = fetch('ignore_repos')
   if (!filter) return list
-  var ignoreList = filter.split(',').map(function (repo) { return repo.trim() })
+
+  var ignoreList = filter.split(',').map(function (repo) {
+    var matcher = repo.trim()
+
+    matcher = /* org/foo */ (/\/[^*]+/.test(matcher)) ? escapeRegExp(matcher) :
+              /* org/*   */ (/\//.test(matcher))      ? '^' + escapeRegExp(matcher.replace(/\*$/, '')) :
+              /* project */                             escapeRegExp('/' + matcher) + '$'
+
+    return new RegExp(matcher)
+  })
 
   return list.filter(function (repo) {
-    return ignoreList.indexOf(repo.project) == -1
+    return ignoreList.every(function (matcher) {
+      return !matcher.test(repo.full_name)
+    })
   })
+}
+
+
+function escapeRegExp(str) {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
