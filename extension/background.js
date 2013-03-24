@@ -20,7 +20,21 @@ chrome.runtime.onSuspend.addListener(function() {
 chrome.alarms.onAlarm.addListener(refresh)
 
 
+// Listen for messages dispatched by the browser page.
+chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.message == 'loggedin') {
+    log('User is now logged in, refreshing')
+    loadCallbacks.push(sendResponse)
+    if (!loadInProgress) refresh()
+    return true
+  } else {
+    return false
+  }
+})
+
+
 var loadInProgress = false
+var loadCallbacks = []
 
 function refresh() {
   log('Refreshing @', new Date())
@@ -61,6 +75,13 @@ function refresh() {
           chrome.browserAction.setBadgeBackgroundColor({
             color: hasUnread ? '#990000' : '#aaaaaa'
           })
+          while (loadCallbacks.length) {
+            try {
+              (loadCallbacks.pop())(true)
+            } catch (e) {
+              // Ignore, means popup has closed.
+            }
+          }
           loadInProgress = false
         }, true)
 

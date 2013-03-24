@@ -46,7 +46,14 @@ function setupAuthView() {
             var resp = JSON.parse(xhr.responseText)
             store('accessToken', resp.token)
             store('username', username)
-            setupListView()
+
+            // Switch over the elements.  Will show "loading".
+            getEl('auth').style.display = 'none'
+            getEl('list').style.display = 'block'
+
+            chrome.extension.sendMessage({message: 'loggedin'}, function(response) {
+              setupListView()
+            })
           } catch (e) {
             log(e)
             onerror()
@@ -76,6 +83,9 @@ function setupAuthView() {
 
 function setupListView() {
   log('Setting up list view')
+
+  getEl('auth').style.display = 'none'
+  getEl('list').style.display = 'block'
 
   var lastLoad = fetch('lastView') || 0
   store('lastView', Date.now())
@@ -134,9 +144,6 @@ function setupListView() {
     chrome.browserAction.setBadgeText({text: String(result.pulls.length)})
     chrome.browserAction.setBadgeBackgroundColor({color: '#aaaaaa'})
   })
-
-  getEl('auth').style.display = 'none'
-  getEl('list').style.display = 'block'
 }
 
 
