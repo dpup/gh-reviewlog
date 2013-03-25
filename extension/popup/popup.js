@@ -102,13 +102,7 @@ function setupListView() {
       var classes = []
 
       if (pull.updatedAt > lastLoad) classes.push('new')
-
-      for (var i = 0; i < alertWords.length; i++) {
-        if (pull.title.indexOf(alertWords[i]) != -1 || pull.body.indexOf(alertWords[i]) != -1) {
-          classes.push('alert')
-          break
-        }
-      }
+      if (matches(alertWords, [pull.title, pull.body])) classes.push(alert)
 
       tr.className = classes.join(' ')
 
@@ -143,15 +137,6 @@ function setupListView() {
 
     chrome.browserAction.setBadgeText({text: String(result.pulls.length)})
     chrome.browserAction.setBadgeBackgroundColor({color: '#aaaaaa'})
-  })
-}
-
-
-function getAlertWords() {
-  var words = fetch('alert_words')
-  if (!words) return []
-  return words.split(',').map(function (word) {
-    return word.trim()
   })
 }
 

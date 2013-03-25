@@ -7,7 +7,7 @@ log('Event page loaded')
 chrome.runtime.onInstalled.addListener(function() {
   log('Background page installed')
   chrome.browserAction.setBadgeText({text: '-'})
-  chrome.browserAction.setBadgeBackgroundColor({color: '#660000'})
+  chrome.browserAction.setBadgeBackgroundColor({color: '#eeaaaa'})
   refresh()
 })
 
@@ -32,7 +32,6 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   }
 })
 
-
 var loadInProgress = false
 var loadCallbacks = []
 
@@ -54,6 +53,7 @@ function refresh() {
 
   } else {
     loadInProgress = true
+
     verifyLogin(function (err, valid) {
       loadInProgress = false
 
@@ -67,9 +67,14 @@ function refresh() {
         loadInProgress = true
         getAllPullRequests(function (result) {
           var lastLoad = fetch('lastView') || 0
+          var lastNotification = fetch('lastNotification') || Date.now()
+          store('lastNotification', Date.now())
+
           var hasUnread = false
           for (var i = 0; i < result.pulls.length && !hasUnread; i++) {
-            if (result.pulls[i].updatedAt > lastLoad) hasUnread = true
+            var pull = result.pulls[i]
+            if (pull.updatedAt > lastLoad) hasUnread = true
+            if (pull.updatedAt > lastNotification) maybeShowNotification(pull)
           }
           chrome.browserAction.setBadgeText({text: String(result.pulls.length)})
           chrome.browserAction.setBadgeBackgroundColor({
@@ -101,6 +106,19 @@ function refresh() {
     })
   }
 }
+
+
+function maybeShowNotification(pull) {
+  if (matches(getAlertWords(), [pull.title, pull.body])) {
+    var title = (pull.updatedAt == pull.createdAt ? 'New PR' : 'PR Updated') + ': ' + pull.title
+    var notification = window.webkitNotifications.createNotification('assets/github_48.png', title, '')
+    notification.onclick = function () {
+      window.open(pull.url)
+    }
+    notification.show()
+  }
+}
+
 
 function getRefreshRate() {
   var time = Number(fetch('refresh_rate'))

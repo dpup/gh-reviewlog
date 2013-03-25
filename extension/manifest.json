@@ -12,12 +12,16 @@
     "512": "assets/github_512.png"
   },
 
+  "web_accessible_resources": [
+    "assets/github_48.png"
+  ],
+
   "incognito": "split",
 
   "permissions": [
     "alarms",
-    "https://api.github.com/",
-    "https://github.com/"
+    "notifications",
+    "https://api.github.com/"
   ],
 
   "options_page": "options/options.html",

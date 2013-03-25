@@ -141,3 +141,28 @@ function jumbleString(str) {
   })
   return str
 }
+
+
+/**
+ * Fetch a list of alert words.
+ */
+function getAlertWords() {
+  var words = fetch('alert_words')
+  if (!words) return []
+  return words.split(',').map(function (word) {
+    return word.trim()
+  })
+}
+
+
+/**
+ * Returns true if one of the alertWords appears in one of the test strings.
+ */
+function matches(alertWords, testStrings) {
+  for (var i = 0; i < alertWords.length; i++) {
+    for (var j = 0; j < testStrings.length; j++) {
+      if (testStrings[j].indexOf(alertWords[i]) != -1) return true
+    }
+  }
+  return false
+}
