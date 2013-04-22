@@ -102,7 +102,7 @@ function setupListView() {
       var classes = []
 
       if (pull.updatedAt > lastLoad) classes.push('new')
-      if (matches(alertWords, [pull.title, pull.body])) classes.push(alert)
+      if (matches(alertWords, [pull.title, pull.body])) classes.push('alert')
 
       tr.className = classes.join(' ')
 

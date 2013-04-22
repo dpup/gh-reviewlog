@@ -80,7 +80,7 @@ function getRepos(type, path, fn, force) {
 
   log('Fetching', cacheKey)
   var xhr = new XMLHttpRequest()
-  xhr.open('GET', 'https://api.github.com/' + path + '?access_token=' + fetch('accessToken') + '&rnd=' + Date.now(), true)
+  xhr.open('GET', 'https://api.github.com/' + path + '?per_page=100&access_token=' + fetch('accessToken') + '&rnd=' + Date.now(), true)
   xhr.setRequestHeader('Accept', 'application/json')
   xhr.onload = function () {
     var res = parseResponse(xhr)
