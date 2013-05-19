@@ -18,7 +18,7 @@ function verifyLogin(fn) {
   xhr.open('GET', 'https://api.github.com/users/' + username, true)
   xhr.setRequestHeader('Authorization', 'bearer ' + accessToken)
   xhr.onload = function () {
-    fn(null, isSuccess(xhr))
+    fn(null, isSuccess(xhr), xhr.status)
   }
   xhr.onerror = function (e) {
     fn(e, false)

@@ -54,15 +54,11 @@ function refresh() {
   } else {
     loadInProgress = true
 
-    verifyLogin(function (err, valid) {
+    verifyLogin(function (err, valid, xhrStatus) {
       loadInProgress = false
 
-      // Probably a network failure.
-      if (err) {
-        log('Error verifying login details', err)
-
       // Force refresh local data.
-      } else if (valid) {
+      if (valid) {
         log('Valid login, requesting all pull requests')
         loadInProgress = true
         getAllPullRequests(function (result) {
@@ -91,8 +87,8 @@ function refresh() {
         }, true)
 
       // Credentials are invalid, so remove them.
-      } else {
-        log('Auth token invalid, clearing credentials')
+      } else if (xhrStatus == 401) {
+        log('Auth token invalid, clearing credentials', xhrStatus)
         delete localStorage.accessToken
 
         // Remove cached pull requests, but leave repositories.
@@ -102,6 +98,10 @@ function refresh() {
 
         chrome.browserAction.setBadgeText({text: '-'})
         chrome.browserAction.setBadgeBackgroundColor({color: '#660000'})
+
+      // Probably a network failure or intermittent issue.
+      } else {
+        log('Auth request failed, xhrStatus=', xhrStatus)
       }
     })
   }
