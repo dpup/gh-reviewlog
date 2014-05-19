@@ -36,6 +36,10 @@ input[type="submit"] {
   width: 55px;
 }
 
+#two-factor-code {
+  display: none;
+}
+
 #authmsg {
   border: 1px solid rgb(150, 150, 150);
   padding: 6px;
