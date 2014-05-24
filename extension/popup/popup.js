@@ -24,6 +24,7 @@ function setupAuthView() {
 
       var username = getEl('username').value
       var password = getEl('password').value
+      var twoFactorCode = getEl('two-factor-code').value
 
       var postData = {
         scopes: ['repo'],
@@ -35,6 +36,7 @@ function setupAuthView() {
       xhr.open('POST', 'https://api.github.com/authorizations', true)
       xhr.setRequestHeader('Content-Type', 'application/json')
       xhr.setRequestHeader('Authorization', 'Basic ' + btoa(username + ':' + password))
+      if (twoFactorCode) xhr.setRequestHeader('X-GitHub-OTP', twoFactorCode)
       xhr.onload = onload
       xhr.onerror = onerror
       xhr.send(JSON.stringify(postData))
@@ -151,6 +153,15 @@ document.body.addEventListener('click', function (e) {
   }
 }, true)
 
+getEl('two-factor-toggle').addEventListener('change', function (e) {
+  var twoFactorToggle = e.target
+  var twoFactorInput = getEl('two-factor-code')
+  if (twoFactorToggle.checked) {
+    twoFactorInput.style.display = 'block'
+  } else {
+    twoFactorInput.style.display = 'none'
+  }
+}, true)
 
 if (hasLogin()) setupListView()
 else setupAuthView()

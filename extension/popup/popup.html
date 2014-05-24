@@ -10,8 +10,16 @@
   <form id="frm">
     <p>Sign in to GitHub:</p>
     <p>
-      <input type="text" id="username" placeholder="username">
-      <input type="password" id="password" placeholder="password">
+      <div>
+        <input type="text" id="username" placeholder="username">
+        <input type="password" id="password" placeholder="password">
+      </div>
+      <div class="checkbox">
+        <input type="checkbox" id="two-factor-toggle"> <span>I use 2-factor</span>
+      </div>
+      <div>
+        <input type="text" id="two-factor-code" placeholder="2-factor code">
+      </div>
       <input type="submit" id="button" value="Login">
     </p>
     <p id="msg" class="info">
